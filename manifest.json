@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "Computer Use v1",
+    "version": "1.0",
+    "action": {
+    "default_popup": "popup.html"
+    },
+    "content_scripts": [
+      {
+        "js": ["content_script.js"]
+      }
+    ]
+}

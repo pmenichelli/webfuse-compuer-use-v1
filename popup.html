@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Iframe Content</title>
+    <style>
+        .container{
+            padding: 30px;
+        }
+        .tab-content{
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>Control page</h3>
+        <div class="tab-content" id="tab1">
+            <input id="cssselector" type="text" value="#kiwi">
+        </div>
+        <div class="tab-content" id="tab2">
+            <input id="x" type="number" value="30">
+            <input id="y" type="number" value="90">
+        </div>
+        <div class="tab-content" id="tab3">
+            <div><button id="click">Click</button></div>
+            <div><button id="click-by-css">Click by CSS</button></div>
+            <div><button id="move-mouse-to-coordinates">Move mouse to Coordinates</button></div>
+        </div>
+        <div class="tab-content" id="tab4">
+            <input id="sendkeys" type="text" value="some text">
+            <button id="send-keys">Send keys</button>
+        </div>
+        <div class="tab-content" id="tab5">
+            <select id="direction">
+                <option value="down">Down</option>
+                <option value="up">Up</option>
+                <option value="right">right</option>
+                <option value="left">left</option>
+            </select>
+            <input id="amount" type="number" value="100">
+            <div><button id="scroll-on-pointer">Scroll</button></div>
+            <div><button id="scroll-by-css">Scroll by CSS</button></div>
+        </div>
+        <div class="tab-content" id="tab6">
+            <button id="run-actions">Run actions</button>
+        </div>
+    </div>
+    <script>
+        const INTERACTIONS = [
+            {
+                "action": "mouse_move",
+                "coordinate": [30, 90]
+            },
+            {
+                "action": "left_click",
+            },
+            {
+                "action": "wait",
+                "duration": 1000
+            },
+            {
+                "action": "type",
+                "text": "The work is mysterious and important...!"
+            },
+            {
+                "action": "wait",
+                "duration": 1000,
+            },
+            {
+                "action": "mouse_move",
+                "coordinate": [110, 350]
+            },
+            {
+                "action": "scroll",
+                "amount": 300,
+                "direction": "down"
+            },
+            {
+                "action": "wait",
+                "duration": 1000,
+            },
+            {
+                "action": "scroll",
+                "amount": 300,
+                "direction": "down"
+            },
+            {
+                "action": "wait",
+                "duration": 1000,
+            },
+            {
+                "action": "scroll",
+                "amount": 100,
+                "direction": "down"
+            },
+            {
+                "action": "wait",
+                "duration": 1000,
+            },
+            {
+                "action": "scroll",
+                "amount": 100,
+                "direction": "down"
+            },
+            {
+                "action": "mouse_move",
+                "coordinate": [300, 700]
+            },
+            {
+                "action": "left_click",
+            },
+            {
+                "action": "scroll",
+                "amount": 300,
+                "direction": "down"
+            },
+            {
+                "action": "wait",
+                "duration": 1000,
+            },
+        ];
+
+        document.getElementById('click').addEventListener('click', e => {
+            const message = {
+                type: "interaction",
+                action: "click",
+            };
+            browser.tabs.sendMessage(null, message);
+        });
+
+        document.getElementById('click-by-css').addEventListener('click', e => {
+            const selector = document.getElementById('cssselector').value;
+            const message = {
+                type: "interaction",
+                action: "click",
+                args: [selector],
+            };
+            browser.tabs.sendMessage(null, message);
+        });
+
+        document.getElementById('send-keys').addEventListener('click', e => {
+            const selector = document.getElementById('cssselector').value;
+            const text = document.getElementById('sendkeys').value;
+            const message = {
+                type: "interaction",
+                action: "type",
+                args: [text, selector],
+            };
+            browser.tabs.sendMessage(null, message);
+        });
+
+        document.getElementById('scroll-on-pointer').addEventListener('click', e => {
+            const amount = document.getElementById('amount').value;
+            const direction = document.getElementById('direction').value;
+            const message = {
+                type: "interaction",
+                action: "scroll",
+                args: [amount, direction],
+            };
+            browser.tabs.sendMessage(null, message);
+        });
+
+        document.getElementById('scroll-by-css').addEventListener('click', e => {
+            const amount = document.getElementById('amount').value;
+            const direction = document.getElementById('direction').value;
+            const selector = document.getElementById('cssselector').value;
+            const message = {
+                type: "interaction",
+                action: "scroll",
+                args: [amount, direction, selector],
+            };
+            browser.tabs.sendMessage(null, message);
+        });
+
+        document.getElementById('move-mouse-to-coordinates').addEventListener('click', e => {
+            const [x, y] = document.querySelectorAll('#tab2 input');
+            const coordinates = [x.value, y.value];
+            const message = {
+                type: "interaction",
+                action: "moveMouse",
+                args: [coordinates],
+            };
+            browser.tabs.sendMessage(null, message);
+        });
+
+        document.getElementById('run-actions').addEventListener('click', e => {
+            const message = {
+                type: "run_actions",
+                interactions: INTERACTIONS,
+            };
+            browser.tabs.sendMessage(null, message);
+        });
+    </script>
+</body>
+</html>

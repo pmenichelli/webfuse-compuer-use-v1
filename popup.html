@@ -28,8 +28,11 @@
             <div><button id="move-mouse-to-coordinates">Move mouse to Coordinates</button></div>
         </div>
         <div class="tab-content" id="tab4">
-            <input id="sendkeys" type="text" value="some text">
-            <button id="send-keys">Send keys</button>
+            <input width="100px" id="sendkeys" type="text" value="some text">
+            <div>
+                <button id="send-keys">Send keys</button>
+                <button id="send-keys-by-css">Send keys by CSS</button>
+            </div>
         </div>
         <div class="tab-content" id="tab5">
             <select id="direction">
@@ -53,6 +56,10 @@
                 "coordinate": [30, 90]
             },
             {
+                "action": "wait",
+                "duration": 10000
+            },
+            {
                 "action": "left_click",
             },
             {
@@ -70,6 +77,10 @@
             {
                 "action": "mouse_move",
                 "coordinate": [110, 350]
+            },
+            {
+                "action": "wait",
+                "duration": 1000
             },
             {
                 "action": "scroll",
@@ -140,6 +151,16 @@
         });
 
         document.getElementById('send-keys').addEventListener('click', e => {
+            const text = document.getElementById('sendkeys').value;
+            const message = {
+                type: "interaction",
+                action: "type",
+                args: [text],
+            };
+            browser.tabs.sendMessage(null, message);
+        });
+
+        document.getElementById('send-keys-by-css').addEventListener('click', e => {
             const selector = document.getElementById('cssselector').value;
             const text = document.getElementById('sendkeys').value;
             const message = {

@@ -8,21 +8,14 @@ browser.runtime.onMessage.addListener(message => {
     }
 });
 
-const mapping = {
-    mouse_move: 'moveMouse',
-    left_click: 'click',
-}
-
 const runActions = async automations => {
     for (const automation of automations) {
         const { action } = automation;
         delete automation.action;
 
-        const automationName = mapping[action] ?? action;
-
         const args = Object.values(automation);
-        console.log('EXTENSION: running', automationName, ...args);
-        await browser.virtualSession.automation[automationName](...args);
+        console.log('EXTENSION: running', action, ...args);
+        await browser.virtualSession.automation[action](...args);
     }
 };
 

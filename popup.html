@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Iframe Content</title>
+    <title>Computer Use Popup</title>
     <style>
         .container{
             padding: 30px;
@@ -16,11 +16,11 @@
     <div>
         <h3>Control page</h3>
         <div class="tab-content" id="tab1">
-            <input id="cssselector" type="text" value="#kiwi">
+            <input id="cssselector" type="text" value="#input-element">
         </div>
         <div class="tab-content" id="tab2">
-            <input id="x" type="number" value="30">
-            <input id="y" type="number" value="90">
+            <input id="x" type="number" value="380">
+            <input id="y" type="number" value="500">
         </div>
         <div class="tab-content" id="tab3">
             <div><button id="click">Click</button></div>
@@ -45,93 +45,8 @@
             <div><button id="scroll-on-pointer">Scroll</button></div>
             <div><button id="scroll-by-css">Scroll by CSS</button></div>
         </div>
-        <div class="tab-content" id="tab6">
-            <button id="run-actions">Run actions</button>
-        </div>
     </div>
     <script>
-        const INTERACTIONS = [
-            {
-                "action": "mouse_move",
-                "coordinate": [30, 90]
-            },
-            {
-                "action": "wait",
-                "duration": 10000
-            },
-            {
-                "action": "left_click",
-            },
-            {
-                "action": "wait",
-                "duration": 1000
-            },
-            {
-                "action": "type",
-                "text": "The work is mysterious and important...!"
-            },
-            {
-                "action": "wait",
-                "duration": 1000,
-            },
-            {
-                "action": "mouse_move",
-                "coordinate": [110, 350]
-            },
-            {
-                "action": "wait",
-                "duration": 1000
-            },
-            {
-                "action": "scroll",
-                "amount": 300,
-                "direction": "down"
-            },
-            {
-                "action": "wait",
-                "duration": 1000,
-            },
-            {
-                "action": "scroll",
-                "amount": 300,
-                "direction": "down"
-            },
-            {
-                "action": "wait",
-                "duration": 1000,
-            },
-            {
-                "action": "scroll",
-                "amount": 100,
-                "direction": "down"
-            },
-            {
-                "action": "wait",
-                "duration": 1000,
-            },
-            {
-                "action": "scroll",
-                "amount": 100,
-                "direction": "down"
-            },
-            {
-                "action": "mouse_move",
-                "coordinate": [300, 700]
-            },
-            {
-                "action": "left_click",
-            },
-            {
-                "action": "scroll",
-                "amount": 300,
-                "direction": "down"
-            },
-            {
-                "action": "wait",
-                "duration": 1000,
-            },
-        ];
-
         document.getElementById('click').addEventListener('click', e => {
             const message = {
                 type: "interaction",
@@ -201,14 +116,6 @@
                 type: "interaction",
                 action: "moveMouse",
                 args: [coordinates],
-            };
-            browser.tabs.sendMessage(null, message);
-        });
-
-        document.getElementById('run-actions').addEventListener('click', e => {
-            const message = {
-                type: "run_actions",
-                interactions: INTERACTIONS,
             };
             browser.tabs.sendMessage(null, message);
         });
